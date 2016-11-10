@@ -1,0 +1,23 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+点击查看
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[2]/td[7]/a[1]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[2]/td[7]/a[1]
+
+复制方案
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[2]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[2]
+
+点击编辑
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[3]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[3]
+
+点击停用
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[4]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[4]
+
+点击分包
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[5]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[5]

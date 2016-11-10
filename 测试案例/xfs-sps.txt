@@ -1,0 +1,51 @@
+*** Settings ***
+Library           Selenium2Library
+Library           Screenshot
+Resource          resource.txt
+
+*** Test Cases ***
+重新生成账单
+    Open Browser    https://dev-sps.xinfushe.com/    IE
+    Maximize Browser Window
+    Wait Until Page Contains Element    id=mobile
+    input text    id=mobile    13264516854
+    input text    id=password    123abc
+    input text    id=valico    1
+    click button    id=loginsub
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click link    link=应收账单
+    Wait Until Page Contains Element    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    click link    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    Wait Until Page Contains Element    xpath=//*[@id="operation"]/div[2]/button
+    click button    xpath=//*[@id="operation"]/div[2]/button
+    sleep    2
+    [Teardown]    close browser
+
+重新生成账单_分层
+    open browser to login page
+    input username    13264516854
+    Input Password    123abc
+    input valico    1
+    click button    id=loginsub
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click link    link=应收账单
+    Wait Until Page Contains Element    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    click link    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    Wait Until Page Contains Element    xpath=//*[@id="operation"]/div[2]/button
+    click button    xpath=//*[@id="operation"]/div[2]/button
+    sleep    2
+    [Teardown]    close browser
+
+重新生成账单_分层_1
+    登录
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[3]
+    click link    link=应收账单
+    Wait Until Page Contains Element    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    click link    xpath=//*[@id="whole"]/table/tbody/tr[1]/td[10]/a[2]
+    Wait Until Page Contains Element    xpath=//*[@id="operation"]/div[2]/button
+    click button    xpath=//*[@id="operation"]/div[2]/button
+    sleep    2
+    [Teardown]    close browser

@@ -1,0 +1,11 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../ElementOperation/public-opera.txt
+
+*** Keywords ***
+登录sps
+    打开浏览器
+    输入用户名    13264516854
+    输入密码    123abc
+    输入验证码    1
+    点击登录

@@ -1,0 +1,10 @@
+*** Variables ***
+${browser}        firefox
+${url}            https://dev-sps.xinfushe.com/
+${username}       13264516854
+${password}       123abc
+${valico}         1
+${customer_name}    ${EMPTY}
+${客户简称为空}         ${EMPTY}
+${客户模板位置}         C:\\Users\\wuzhi_000\\Downloads\\impCorp.xlsx
+${员工模板位置}         C:\\Users\\wuzhi_000\\Downloads\\impEmpTemplate.xlsx

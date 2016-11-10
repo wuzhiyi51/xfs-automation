@@ -1,0 +1,3 @@
+*** Keywords ***
+添加用户
+    [Arguments]    ${username}

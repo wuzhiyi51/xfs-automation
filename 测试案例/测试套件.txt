@@ -1,0 +1,94 @@
+*** Settings ***
+Library           Selenium2Library
+Library           Collections
+Library           Screenshot
+
+*** Test Cases ***
+test_case_log
+    ${a}    Set variable    hello world
+    log    ${a}
+
+test_case_catenate
+    ${hi}    Catenate    hello    world
+    log    ${hi}
+
+test_case_catenate_separator
+    ${hi}    Catenate    SEPARATOR=---    hello    world
+    log    ${hi}
+
+test_case_create_list
+    ${abc}    Create List    a    b    c
+    log    ${abc}
+
+test_case_create_list_log_many
+    @{abc}    Create List    a    b    c
+    log many    @{abc}
+
+test_case_get_time
+    ${t}    get time    hello world
+    log    ${t}
+
+test_case_get_time_sleep
+    ${t}    get time    hello world
+    sleep    5
+    ${t}    get time    hello world
+
+test_case_if
+    ${a}    Set variable    59
+    run keyword if    ${a}>=90    log    优秀
+    ...    ELSE IF    ${a}<=70    log    良好
+    ...    ELSE IF    ${a}<=60    log    及格
+    ...    ELSE    log    不及格
+
+test_case_for
+    : FOR    ${i}    IN RANGE    10
+    \    log    ${i}
+
+test_case_for_create_list
+    @{abc}    create list    a    b    c
+    : FOR    ${i}    IN    @{abc}
+    \    log    ${i}
+
+test_case_evaluate
+    ${d}    Evaluate    random.randint(1000,9999)    random
+    log    ${d}
+
+test_case_evaluate_os
+    Evaluate    os.system('python c:/hello.py')    os
+
+test_case_import_library
+    Import Library    unittest
+
+test_case_collections
+    Create Dictionary    key    value    key    value
+    Create Dictionary    a    1    b    2
+
+xfs_sps_login
+    Open Browser    https://dev-sps.xinfushe.com/serviceLogin/serviceProviderLogin    IE
+    sleep    2
+    Input text    id=mobile    13146751613
+    input text    id=password    123abc
+    input text    id=valico    2d4c
+    click button    id=loginsub
+    sleep    3
+    close browser
+    open browser    https://dev-bs.xinfushe.com
+    input text    id=inputUsername    bsadmin
+    input text    xpath=//*[@id="inputPassword"]    123456
+    input text    xpath=//*[@id="captchaText"]    1234
+    click button    xpath=//*[@id="submitButton"]
+    close browser
+
+xfs_sps_ruzhu
+    open browser    https://dev-sps.xinfushe.com/serviceLogin/serviceProviderLogin
+    click link    link=免费入驻
+    sleep    2
+    close browser
+
+baidu_search
+    open browser    http://www.baidu.com/    chrome
+    Wait Until Page Contains Element    xpath=//*[@id="kw"]
+    input text    id=kw    robot framework
+    click button    id=su
+    sleep    3
+    close browser

@@ -1,0 +1,202 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../EnvVariable.txt
+Resource          ../ElementOperation/public-opera.txt
+Resource          ../ComponentOperation/00-Component-login.txt
+Resource          ../DataBaseCheck.txt
+Library           Screenshot
+Library           Collections
+Library           ExcelLibrary
+Variables         var.py
+
+*** Test Cases ***
+导入客户
+    open browser    ${url}
+    Maximize Browser Window
+    Wait Until Page Contains Element    id=mobile
+    input text    id=mobile    13264516854
+    input text    id=password    123abc
+    input text    id=valico    1
+    click button    id=loginsub
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[2]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[2]
+    Wait Until Page Contains Element    xpath=//*[@id="uploadFile"]
+    choose file    xpath=//*[@id="uploadFile"]    ${客户模板位置}
+    Wait Until Page Contains Element    name=sheetName
+    click button    name=sheetName
+    click element    xpath=//*[@id="import"]/div[2]/div/div[3]/button
+    Wait Until Page Contains Element    xpath=//*[@id="er"]/div[2]/div/div[3]/button[3]
+    click element    xpath=//*[@id="er"]/div[2]/div/div[3]/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="san"]/div[2]/div/div[3]/button[3]
+    ${fail}    set variable    page should contain    导入失败
+    run keyword if    ${fail}    log    导入失败
+    ${success}    set variable    page should contain    导入成功
+    run keyword if    ${fail}    log    导入成功
+    click element    xpath=//*[@id="san"]/div[2]/div/div[3]/button[3]
+    [Teardown]    close browser
+
+导入客户_分层
+    [Setup]
+    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[2]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[2]
+    Wait Until Page Contains Element    xpath=//*[@id="uploadFile"]
+    choose file    xpath=//*[@id="uploadFile"]    ${客户模板位置}
+    Wait Until Page Contains Element    name=sheetName
+    click button    name=sheetName
+    click element    xpath=//*[@id="import"]/div[2]/div/div[3]/button
+    Wait Until Page Contains Element    xpath=//*[@id="er"]/div[2]/div/div[3]/button[3]
+    click element    xpath=//*[@id="er"]/div[2]/div/div[3]/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="san"]/div[2]/div/div[3]/button[3]
+    验证导入状态    导入失败
+    click element    xpath=//*[@id="san"]/div[2]/div/div[3]/button[3]
+    [Teardown]    关闭浏览器
+
+创建客户
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="corpName"]
+    input text    id=corpName    测试客户
+    input text    id=shortName    客户简称
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select    北京市
+    click element    css=option[value="2"]
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select[2]    东城区
+    input text    id=cpAddress    测试地址
+    input text    id=contactPsn    测试联系人
+    input text    id=telephone    010-58501689
+    input text    id=mobile    13264516813
+    input text    id=mail    wuzy@xinfushe.com
+    input text    id=remark    备注
+    click button    xpath=//*[@id="corpEditForm"]/div[3]/div/div[12]/div/button[2]
+    验证创建客户是否成功    成功
+    [Teardown]    关闭浏览器
+
+创建客户_数据分离
+    [Setup]    登录sps
+    import variables    ${CURDIR}\\var.py
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="corpName"]
+    input text    id=corpName    ${cust_name}
+    input text    id=shortName    客户简称
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select    北京市
+    click element    css=option[value="2"]
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select[2]    东城区
+    input text    id=cpAddress    测试地址
+    input text    id=contactPsn    测试联系人
+    input text    id=telephone    010-58501689
+    input text    id=mobile    13264516813
+    input text    id=mail    wuzy@xinfushe.com
+    input text    id=remark    备注
+    click button    xpath=//*[@id="corpEditForm"]/div[3]/div/div[12]/div/button[2]
+    验证创建客户是否成功    成功
+    [Teardown]    关闭浏览器
+
+创建客户_用户名为空
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="corpName"]
+    input text    id=corpName    ${customer_name}
+    input text    id=shortName    客户简称
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select    北京市
+    click element    css=option[value="2"]
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select[2]    东城区
+    input text    id=cpAddress    测试地址
+    input text    id=contactPsn    测试联系人
+    input text    id=telephone    010-58501689
+    input text    id=mobile    13264516813
+    input text    id=mail    wuzy@xinfushe.com
+    input text    id=remark    备注
+    click button    xpath=//*[@id="corpEditForm"]/div[3]/div/div[12]/div/button[2]
+    验证创建客户是否成功    请填写客户名称
+    [Teardown]    关闭浏览器
+
+创建客户_客户简称为空
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="corpName"]
+    input text    id=corpName    测试客户
+    input text    id=shortName    ${客户简称为空}
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select    北京市
+    click element    css=option[value="2"]
+    select from list by label    xpath=//form[@id='corpEditForm']/div[3]/div/div[3]/div/div/select[2]    东城区
+    input text    id=cpAddress    测试地址
+    input text    id=contactPsn    测试联系人
+    input text    id=telephone    010-58501689
+    input text    id=mobile    13264516813
+    input text    id=mail    wuzy@xinfushe.com
+    input text    id=remark    备注
+    click button    xpath=//*[@id="corpEditForm"]/div[3]/div/div[12]/div/button[2]
+    验证创建客户是否成功    请填写客户简称
+    [Teardown]    关闭浏览器
+
+创建客户_公司地址为空
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    click element    xpath=//*[@id="searchForm"]/div[1]/div[1]/div/button[3]
+    Wait Until Page Contains Element    xpath=//*[@id="corpName"]
+    input text    id=corpName    测试客户
+    input text    id=shortName    客户简称
+    input text    id=cpAddress    测试地址
+    input text    id=contactPsn    测试联系人
+    input text    id=telephone    010-58501689
+    input text    id=mobile    13264516813
+    input text    id=mail    wuzy@xinfushe.com
+    input text    id=remark    备注
+    click button    xpath=//*[@id="corpEditForm"]/div[3]/div/div[12]/div/button[2]
+    公司地址为空    公司地址不能为空！
+    [Teardown]    关闭浏览器
+
+方案管理_自有方案查看
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="tab"]/tbody/tr[6]/td[7]/a
+    click element    xpath=//*[@id="tab"]/tbody/tr[6]/td[7]/a
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[1]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[1]
+    验证方案    服务内容及约定
+    click element    xpath=//*[@id="contentForm"]/div[5]/button[2]
+    sleep    2
+    page should contain    添加方案
+    [Teardown]    关闭浏览器
+
+方案管理_自有方案复制
+    [Setup]    登录sps
+    Wait Until Page Contains Element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/div[1]
+    click element    xpath=//*[@id="leftMenuDiv"]/div[2]/ul[1]/li[1]/a
+    Wait Until Page Contains Element    xpath=//*[@id="tab"]/tbody/tr[6]/td[7]/a
+    click element    xpath=//*[@id="tab"]/tbody/tr[6]/td[7]/a
+    Wait Until Page Contains Element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[1]
+    click element    xpath=/html/body/div[5]/div[3]/table/tbody/tr[1]/td[7]/a[1]
+    验证方案    服务内容及约定
+    click element    xpath=//*[@id="contentForm"]/div[5]/button[2]
+    sleep    2
+    page should contain    添加方案
+    [Teardown]    关闭浏览器

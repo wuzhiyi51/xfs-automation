@@ -1,0 +1,35 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Variables ***
+${SERVER}         dev-sps.xinfushe.com
+${BROWSER}        Firefox
+${DELAY}          0
+${VALID USER}     13264516854
+${VALID PASSWORD}    123abc
+${LOGIN URL}      https://${SERVER}/
+
+*** Keywords ***
+Open Browser To Login Page
+    open browser    ${LOGIN URL}    ${BROWSER}
+    maximize browser window
+    set selenium speed    ${DELAY}
+
+Input Username
+    [Arguments]    ${username}
+    input text    id=mobile    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    id=password    ${password}
+
+Input Valico
+    [Arguments]    ${valico}
+    input text    id=valico    ${valico}
+
+登录
+    open browser to login page
+    input username    13264516854
+    input password    123abc
+    input valico    1
+    click button    id=loginsub

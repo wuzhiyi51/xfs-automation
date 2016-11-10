@@ -1,0 +1,18 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+验证创建客户是否成功
+    [Arguments]    ${expectContent}
+    sleep    2
+    page should contain    ${expectContent}
+
+公司地址为空
+    [Arguments]    ${expectContent}
+    sleep    2
+    page should contain    公司地址不能为空！
+
+验证方案
+    [Arguments]    ${expectContent}
+    sleep    2
+    page should contain    ${expectContent}

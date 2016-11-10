@@ -1,0 +1,30 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+点击登录
+    click button    id=loginsub
+
+输入用户名
+    [Arguments]    ${username}
+    input text    id=mobile    ${username}
+
+打开浏览器
+    open browser    ${url}    ${browser}
+    maximize browser window
+
+输入密码
+    [Arguments]    ${password}
+    input text    id=password    ${password}
+
+输入验证码
+    [Arguments]    ${valico}
+    input text    id=valico    ${valico}
+
+关闭浏览器
+    close browser
+
+验证导入状态
+    [Arguments]    ${expectContent}
+    sleep    2s
+    page should contain    ${expectContent}
